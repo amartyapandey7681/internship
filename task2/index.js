@@ -58,7 +58,19 @@ app.post('/signinn',function(req,res){
 //post request of the login page
 app.use(bp.urlencoded({extended : true}));
 app.post('/loginn',function(req,res){
- 
+ var username = request.body.name;
+  var password = request.body.password;
+  if (username && password) {
+// check if user exists
+      connect.query('SELECT * FROM users WHERE id = ? AND name = ?', [password,username], function(error, results, fields) {
+          if (results.length > 0) {
+              response.send('logged in successfully');
+          } else {
+              response.send('Incorrect Username and/or Password!');
+          }           
+      
+      });
+  } 
 
     
 });
